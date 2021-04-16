@@ -69,12 +69,22 @@ namespace EncryptingDecryptingMessages
         
         public static string MultiEnc(int[] clean_text, int[] clean_mkey)
         {
-            string encryptedString = "";
-            
-
-            for (int i = 0; i < clean_text.Length; i++)
+            int[] revolvingKey = new int[clean_text.Length];
+            int counter = 0;
+            for (int i = 0; i < revolvingKey.Length; i++)
             {
-                int keyValue = clean_mkey[i] - 64;
+                revolvingKey[i] = clean_mkey[counter];
+                counter++;
+                if(counter > clean_mkey.Length-1)
+                {
+                    counter = 0;
+                }
+            }
+
+            string encryptedString = "";
+            for (int i = 0; i < revolvingKey.Length; i++)
+            {
+                int keyValue = revolvingKey[i] - 64;
                 int newASCIILocation = clean_text[i] + keyValue;
                 char substring = (char)newASCIILocation;
                 encryptedString += substring;
