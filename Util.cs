@@ -61,14 +61,25 @@ namespace EncryptingDecryptingMessages
             for (int i = 0; i < clean_text.Length; i++)
             {
                 int newASCIILocation = clean_text[i] + movePlaces;
-                encryptedString = newASCIILocation.ToString();
+                char substring = (char)newASCIILocation;
+                encryptedString += substring;
             }
             return encryptedString;
         }
         
         public static string MultiEnc(int[] clean_text, int[] clean_mkey)
         {
-            throw new NotImplementedException();
+            string encryptedString = "";
+            
+
+            for (int i = 0; i < clean_text.Length; i++)
+            {
+                int keyValue = clean_mkey[i] - 64;
+                int newASCIILocation = clean_text[i] + keyValue;
+                char substring = (char)newASCIILocation;
+                encryptedString += substring;
+            }
+            return encryptedString;
         }
         
         public static string ContiEnc(int[] clean_text, int[] clean_mkey)
