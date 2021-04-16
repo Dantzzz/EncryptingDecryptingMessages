@@ -99,12 +99,45 @@ namespace EncryptingDecryptingMessages
 
         public static string SingleDec(string enc_single, int[] clean_skey)
         {
-            throw new NotImplementedException();
+           int[] asciiCharacters = Clean(enc_single);
+
+           int movePlaces = clean_skey[0] - 64;
+           string decryptedString = "";
+
+           for (int i = 0; i < asciiCharacters.Length; i++)
+           {
+               int newASCIILocation = asciiCharacters[i] - movePlaces;
+               char substring = (char)newASCIILocation;
+               decryptedString += substring;
+           }
+           return decryptedString;
         }
         
         public static string MultiDec(string enc_multi, int[] clean_mkey)
         {
-            throw new NotImplementedException();
+            int[] asciiCharacters = Clean(enc_multi);
+
+            int[] revolvingKey = new int[asciiCharacters.Length];
+            int counter = 0;
+            for (int i = 0; i < revolvingKey.Length; i++)
+            {
+                revolvingKey[i] = clean_mkey[counter];
+                counter++;
+                if (counter > clean_mkey.Length - 1)
+                {
+                    counter = 0;
+                }
+            }
+
+            string decryptedString = "";
+            for (int i = 0; i < revolvingKey.Length; i++)
+            {
+                int keyValue = revolvingKey[i] - 64;
+                int newASCIILocation = enc_multi[i] - keyValue;
+                char substring = (char)newASCIILocation;
+                decryptedString += substring;
+            }
+            return decryptedString;
         }
         
         public static string ContiDec(string enc_conti, int[] clean_mkey)
