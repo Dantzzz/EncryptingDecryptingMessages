@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EncryptingDecryptingMessages
@@ -94,7 +95,20 @@ namespace EncryptingDecryptingMessages
         
         public static string ContiEnc(int[] clean_text, int[] clean_mkey)
         {
-            throw new NotImplementedException();
+            int[] contiKey = clean_mkey.Concat(clean_text).ToArray();
+            string encryptedString = "";
+            for (int i = 0; i < clean_text.Length; i++)
+            {
+                int keyValue = contiKey[i] - 64;
+                int newASCIILocation = clean_text[i] + keyValue;
+                if(newASCIILocation > 90)
+                {
+                    newASCIILocation = newASCIILocation - 26;
+                }
+                char substring = (char)newASCIILocation;
+                encryptedString += substring;
+            }
+            return encryptedString;
         }
 
         public static string SingleDec(string enc_single, int[] clean_skey)

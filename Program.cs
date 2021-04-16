@@ -22,12 +22,11 @@ namespace EncryptingDecryptingMessages
 
             string enc_single = Util.SingleEnc(clean_text, clean_skey);
             string enc_multi = Util.MultiEnc(clean_text, clean_mkey);
-
-            //string enc_conti = Util.ContiEnc(clean_text, clean_mkey);
+            string enc_conti = Util.ContiEnc(clean_text, clean_mkey);
             
             Console.WriteLine( $"Encrypted message with single_key is [{enc_single}]. ");
             Console.WriteLine( $"Encrypted message with multi_key is [{enc_multi}]. ");
-            //Console.WriteLine( $"Encrypted message with continuous key is [{enc_conti }]. ");
+            Console.WriteLine( $"Encrypted message with continuous key is [{enc_conti }]. ");
             Console.WriteLine();
 
             string dec_single = Util.SingleDec( enc_single, clean_skey);
