@@ -31,11 +31,11 @@ namespace EncryptingDecryptingMessages
 
             string dec_single = Util.SingleDec( enc_single, clean_skey);
             string dec_multi = Util.MultiDec(enc_multi, clean_mkey);
-            //string dec_conti = Util.ContiDec(enc_conti, clean_mkey);
+            string dec_conti = Util.ContiDec(enc_conti, clean_mkey);
 
             Console.WriteLine( $"Decrypted message with single_key is [{dec_single}] ");
             Console.WriteLine( $"Decrypted message with multi_key is [{dec_multi}]. ");
-            //Console.WriteLine( $"Decrypted message with continuous_key is [{dec_conti}] ");
+            Console.WriteLine( $"Decrypted message with continuous_key is [{dec_conti}]. ");
             Console.WriteLine();
         }
     }

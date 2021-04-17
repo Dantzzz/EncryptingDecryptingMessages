@@ -23,7 +23,7 @@ namespace EncryptingDecryptingMessages
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Try again... Please enter one character: ");
+                Console.WriteLine($"{ex} Try again... Please enter one character: ");
                 GetSingleKey();
                 return null;
             }
@@ -72,6 +72,8 @@ namespace EncryptingDecryptingMessages
         {
             int[] revolvingKey = new int[clean_text.Length];
             int counter = 0;
+            string encryptedString = "";
+
             for (int i = 0; i < revolvingKey.Length; i++)
             {
                 revolvingKey[i] = clean_mkey[counter];
@@ -82,7 +84,6 @@ namespace EncryptingDecryptingMessages
                 }
             }
 
-            string encryptedString = "";
             for (int i = 0; i < revolvingKey.Length; i++)
             {
                 int keyValue = revolvingKey[i] - 64;
@@ -97,6 +98,7 @@ namespace EncryptingDecryptingMessages
         {
             int[] contiKey = clean_mkey.Concat(clean_text).ToArray();
             string encryptedString = "";
+
             for (int i = 0; i < clean_text.Length; i++)
             {
                 int keyValue = contiKey[i] - 64;
@@ -156,7 +158,40 @@ namespace EncryptingDecryptingMessages
         
         public static string ContiDec(string enc_conti, int[] clean_mkey)
         {
-            throw new NotImplementedException();
+            int[] encodedASCII = Clean(enc_conti);
+            int[] key = new int[clean_mkey.Length];
+            Array.Copy(clean_mkey, key, clean_mkey.Length);
+
+            int[] keyBuilder = new int[clean_mkey.Length];
+            string decryptedString = "";
+            int counter = 0;
+
+            while (decryptedString.Length < encodedASCII.Length)
+            {
+                for (int i = 0; i < key.Length; i++)
+                {
+                    if(counter < encodedASCII.Length)
+                    {
+                        keyBuilder[i] = encodedASCII[counter] - (key[i] - 64);
+                        counter++;
+                        if(keyBuilder[i] > 90)
+                        {
+                            keyBuilder[i] = keyBuilder[i] - 26;
+                        }
+
+                        if(keyBuilder[i] < 65)
+                        {
+                            keyBuilder[i] = keyBuilder[i] + 26;
+                        }
+                        char substring = (char)keyBuilder[i];
+                        decryptedString += substring;
+                    }
+
+                }
+                Array.Copy(keyBuilder, key, keyBuilder.Length);
+
+            }
+            return decryptedString;
         }
     }
 }
